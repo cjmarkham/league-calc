@@ -1,0 +1,71 @@
+%section
+  %h3 Create a fixture
+
+  = form_tag({action: :create}, {class: 'form-horizontal'}) do
+    = hidden_field_tag :league_id, params[:league_id]
+    .form-group
+      %label.control-label.col-sm-2 Date
+      .col-sm-10
+        = date_field_tag :date, nil, class: 'form-control'
+
+    #wrapper
+      %fieldset
+        %legend Fixture 1
+        .form-group
+          %label.control-label.col-sm-2 Home Team
+          .col-sm-10
+            = select_tag 'home_teams[]', options_from_collection_for_select(Team.where(league: @league).order(name: :asc), :id, :name), include_blank: true, class: 'form-control'
+
+        .form-group
+          %label.control-label.col-sm-2 Away Team
+          .col-sm-10
+            = select_tag 'away_teams[]', options_from_collection_for_select(Team.where(league: @league).order(name: :asc), :id, :name), include_blank: true, class: 'form-control'
+
+        .form-group
+          %label.control-label.col-sm-2 Time
+          .col-sm-10
+            = time_field_tag 'times[]', nil, class: 'form-control'
+
+    .form-group
+      .col-sm-2
+      .col-sm-10
+        = submit_tag 'Create', class: 'btn btn-primary'
+        = button_tag 'Add more', class: 'btn btn-info add-more', type: 'button'
+
+:javascript
+  $(function () {
+    $('.add-more').on('click', function () {
+      var container = $('#wrapper');
+      var fieldset = $('<fieldset />');
+      var legend = $('<legend />');
+      var last_legend = $('legend:last');
+      var last_text = last_legend.text().replace('Fixture ', '');
+      var last_number = parseInt(last_text, 10);
+      legend.text('Fixture ' + (last_number + 1));
+      fieldset.append(legend);
+
+      var form_group = $('<div />').attr('class', 'form-group');
+      var label = $('<label />').attr('class', 'control-label col-sm-2').text('Home Team');
+      var col = $('<div />').attr('class', 'col-sm-10');
+      $('select[name="home_teams[]"]:first').clone(true).appendTo(col);
+      form_group.append(label, col);
+      fieldset.append(form_group);
+      container.append(fieldset);
+
+      var form_group = $('<div />').attr('class', 'form-group');
+      var label = $('<label />').attr('class', 'control-label col-sm-2').text('Away Team');
+      var col = $('<div />').attr('class', 'col-sm-10');
+      $('select[name="away_teams[]"]:first').clone(true).appendTo(col);
+      form_group.append(label, col);
+      fieldset.append(form_group);
+      container.append(fieldset);
+
+      var form_group = $('<div />').attr('class', 'form-group');
+      var label = $('<label />').attr('class', 'control-label col-sm-2').text('Time');
+      var col = $('<div />').attr('class', 'col-sm-10');
+      $('input[name="times[]"]:first').clone(true).appendTo(col);
+      form_group.append(label, col);
+      fieldset.append(form_group);
+      container.append(fieldset);
+    });
+  });

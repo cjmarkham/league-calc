@@ -1,0 +1,44 @@
+%section
+  %h3
+    Fixtures for
+    = @league.name
+  .scrollable-tabs-wrapper{style: 'overflow-x:scroll'}
+    .scrollable-tabs{style: "width:#{@weeks.count * 70}px"}
+      %ul.nav.nav-tabs#tabs
+        - @weeks.each do |week|
+          %li.nav-item{class: ('active' if @current_week.to_s == week.to_s)}
+            %a.nav-link{href: "#week#{week}", data: {toggle: 'tab'}}
+              = week.strftime('%d/%m')
+
+  .tab-content
+    - @weeks.each do |week|
+      .tab-pane.active{id: "week#{week}", class: ('active' if @current_week.to_s == week.to_s)}
+
+
+:javascript
+  $(function () {
+
+    get_fixtures($('#tabs .active a'));
+
+    $('#tabs a').on('click', function() {
+      get_fixtures($(this));
+    });
+
+  });
+
+  function get_fixtures (element) {
+    var id = element.attr('href');
+    console.log(id);
+    var target = $(".tab-content " + id);
+    if (target.html().length) {
+      return;
+    }
+
+    var request = $.get('/fixtures/weekly', {
+      start: id,
+    });
+
+    request.done(function (response) {
+      target.html(HandlebarsTemplates['fixture'](response));
+    });
+  }

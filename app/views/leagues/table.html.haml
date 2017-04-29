@@ -1,0 +1,31 @@
+%section
+  %h3= "#{@league.name} League Table"
+  %table.table.table-striped.league-table
+    %thead
+      %tr
+        %th{width: '5%'} #
+        %th{width: '40%'} Team
+        %th GP
+        %th W
+        %th D
+        %th L
+        %th GF
+        %th GA
+        %th GD
+        %th Pts
+    - @teams = @league.teams.order(points: :desc).order(goal_difference: :desc).order(name: :asc)
+    - @teams.each_with_index do |team, i|
+      %tr{style: ('background: rgba(255, 0, 0, .3)' if i > @teams.count - 4)}
+        %td= i+1
+        %td
+          %img{src: team.badge, width: '28px', height: '21px'}
+          = team.name
+        %td= team.played
+        %td= team.wins
+        %td= team.draws
+        %td= team.losses
+        %td= team.goals_for
+        %td= team.goals_against
+        %td= team.goal_difference
+        %td
+          %strong= team.points

@@ -1,0 +1,89 @@
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+body {
+  overflow-x: hidden;
+}
+
+.fixture-list {
+  .date {
+    background: #fcfcfc;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    padding: 5px;
+    padding-left: 10px;
+  }
+
+  .fixture {
+    border: 1px solid #ddd;
+
+    .scores {
+      text-align: center;
+    }
+
+    .time {
+      text-align: center;
+      line-height: 44px;
+    }
+
+    .names {
+      img {
+        width: 28px;
+        height: 21px;
+        float: left;
+        margin-right: 10px;
+      }
+    }
+
+    p {
+      input {
+        width: 30px;
+        text-align: center;
+        border: 0;
+      }
+    }
+  }
+}
+
+table input {
+  width: 30px;
+  text-align: center;
+  border: 0;
+}
+
+section {
+  padding: 20px;
+}
+
+
+.table-condensed > tbody > tr > td {
+  padding: 20px;
+  padding-bottom: 10px;
+}
+
+.nav-tabs {
+  border-bottom: 0;
+}
+
+.nav-tabs > li.active > a {
+  border-bottom: 4px solid red;
+  border-radius: 0;
+}
+
+.nav-tabs > li > a {
+  margin-right: 0;
+  border-right: 1px solid #ddd;
+  border-top: 0;
+  border-bottom: 0;
+  border-radius: 0;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border: 0;
+  border-right: 1px solid #ddd;
+  border-bottom: 4px solid red;
+}
+
+.bold {
+  font-weight: bold;
+}

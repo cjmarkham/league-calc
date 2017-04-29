@@ -1,0 +1,46 @@
+{{#each items}}
+  <div class="fixture-list">
+    <div class="date">{{@key}}</div>
+    <table class="table table-hover table-condensed">
+      {{#grouped_each 2 this}}
+        <tr>
+          {{#each this}}
+            <td class="fixture" width="50%">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="names">
+                    <div>
+                      <image src="{{home_badge}}" />
+                      <p>{{home_team_name}}</p>
+                    </div>
+                    <div>
+                      <image src="{{away_badge}}" />
+                      <p>{{away_team_name}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="scores">
+                    <p {{bind-attr class="home_won:bold"}}>
+                      <input data-fixture={{id}} name="fixture[home_score]" type="text" value="{{home_team_score}}" />
+                    </p>
+                    <p {{bind-attr class="away_won:bold"}}>
+                      <input data-fixture={{id}} name="fixture[away_score]" type="text" value="{{away_team_score}}" />
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="time">
+                    <p>
+                      {{status}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </td>
+          {{/each}}
+        </tr>
+      {{/grouped_each}}
+    </table>
+  </div>
+{{/each}}

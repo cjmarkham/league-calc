@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LeagueCalc</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <script src="https://use.fontawesome.com/9b18b2212b.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            Carls super awesome league calculator
+            <p style="top: -10px;display:inline-block;position:relative;font-size:12px" class="fa fa-trademark"></p>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Fixtures <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <%- League.all.each do |league| %>
+                  <li>
+                    <%= link_to league.name, fixtures_path(league_id: league.id) %>
+                  </li>
+                <%- end %>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Tables <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <%- League.all.each do |league| %>
+                  <li>
+                    <%= link_to league.name, table_league_path(league.id) %>
+                  </li>
+                <%- end %>
+              </ul>
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Create Fixture <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <%- League.all.each do |league| %>
+                  <li>
+                    <%= link_to league.name, new_fixture_path(league_id: league.id) %>
+                  </li>
+                <%- end %>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <%- [:error, :info, :success, :alert, :notice].each do |type| %>
+          <%- if flash[type] %>
+            <div class="container text-center">
+              <p class="alert alert-<%=type%>">
+                <%= flash[type].html_safe %>
+              </p>
+            </div>
+          <%- end %>
+        <%- end %>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
